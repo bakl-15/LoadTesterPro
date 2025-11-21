@@ -8,5 +8,9 @@ use App\Auth\Domain\User\ValueObject\Email;
 
 final class UserEmailVerified
 {
-    public function __construct(public readonly UserId $id, public readonly Email $email, public readonly \DateTimeImmutable $verifiedAt) {}
+    public function __construct(
+        public readonly UserId $id, 
+        public readonly Email $email,
+        public readonly \DateTimeImmutable $verifiedAt
+    ) {}
 }
