@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Auth\Application\CommandHandler;
+namespace App\Auth\Application\User\CommandHandlers;
 
 use App\Auth\Application\User\Command\RemoveRoleFromUserCommand;
 use App\Auth\Domain\User\Repository\UserRepositoryInterface;
+use App\Auth\Domain\User\ValueObject\UserId;
 
 class RemoveRoleFromUserHandler
 {
@@ -13,7 +14,7 @@ class RemoveRoleFromUserHandler
 
     public function __invoke(RemoveRoleFromUserCommand $cmd): void
     {
-        $user = $this->users->find($cmd->userId);
+        $user = $this->users->find(new UserId($cmd->userId));
         if (!$user) {
             throw new \Exception("User not found");
         }

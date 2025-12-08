@@ -1,40 +1,43 @@
 <?php
 
-namespace App\Auth\Application\Command;
+namespace App\Auth\Application\User\CommandHandlers;
 
-use App\Auth\Domain\User\Entity\User;
 use App\Auth\Application\User\Command\LoginUserCommand;
-use App\Auth\Domain\User\Repository\UserRepositoryInterface;
 use App\Auth\Domain\User\Exception\InvalidCredentialsException;
-use App\Auth\Domain\User\ValueObject\Email;
+use App\Auth\Domain\User\Repository\UserRepositoryInterface;
+use App\Auth\Infrastructure\Security\SecurityUser;
+use App\Auth\Infrastructure\Security\UserProvider;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 final class LoginUserHandler
 {
     public function __construct(
-        private UserRepositoryInterface $userRepo,
+        private UserProvider $userProvider,
         private UserPasswordHasherInterface $passwordHasher,
         private JWTTokenManagerInterface $jwtManager
     ) {}
 
     public function handle(LoginUserCommand $command): string
     {
-        $user = $this->userRepo->findByEmail(new Email($command->email));
+        // Charge l'utilisateur via le UserProvider Symfony
+        $user = $this->userProvider->loadUserByIdentifier($command->email);
 
-        if (null === $user || !$user instanceof User) {
-            throw new InvalidCredentialsException('Invalid credentials.');
+        if (!$user instanceof SecurityUser) {
+            throw new InvalidCredentialsException('Invalid user.');
         }
 
+        // Vérifie le mot de passe
         if (!$this->passwordHasher->isPasswordValid($user, $command->password)) {
             throw new InvalidCredentialsException('Invalid credentials.');
         }
 
-        if (!$user->isVerified()) {
+        // Vérifie que l'utilisateur est bien vérifié
+        if (!$user->domainUser()->isVerified()) {
             throw new InvalidCredentialsException('User not verified.');
         }
 
-        return $this->jwtManager->create($user); // Retourne le token JWT
+        // Génère le token JWT
+        return $this->jwtManager->create($user);
     }
 }
-

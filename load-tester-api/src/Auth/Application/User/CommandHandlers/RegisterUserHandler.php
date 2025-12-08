@@ -1,5 +1,5 @@
 <?php
-namespace App\Auth\Application\Handler;
+namespace App\Auth\Application\User\CommandHandlers;
 
 use App\Auth\Domain\User\Entity\User;
 use App\Auth\Domain\User\ValueObject\Email;

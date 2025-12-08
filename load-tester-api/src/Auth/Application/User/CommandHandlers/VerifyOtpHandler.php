@@ -1,9 +1,10 @@
 <?php
-namespace App\Auth\Application\Handler;
+namespace App\Auth\Application\User\CommandHandlers;
 
 use App\Auth\Domain\User\Event\UserVerified;
-use App\Auth\Application\Command\VerifyOtpCommand;
+
 use App\Auth\Application\Service\DomainEventDispatcher;
+use App\Auth\Application\User\Command\VerifyOtpCommand;
 use App\Auth\Domain\User\Repository\UserRepositoryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

@@ -1,16 +1,17 @@
 <?php
 namespace App\Auth\Domain\User\Entity;
 
-use App\Auth\Domain\User\ValueObject\UserId;
-use App\Auth\Domain\User\ValueObject\Email;
-use App\Auth\Domain\User\ValueObject\PasswordHash;
 use App\Auth\Domain\User\ValueObject\Otp;
-use App\Auth\Domain\User\Event\UserRegistered;
+use App\Auth\Domain\User\ValueObject\Email;
 use App\Auth\Domain\User\Event\UserVerified;
+use App\Auth\Domain\User\ValueObject\UserId;
 use App\Auth\Domain\User\Event\UserRoleAdded;
+use App\Auth\Domain\User\Event\UserRegistered;
 use App\Auth\Domain\User\Event\UserRoleRemoved;
+use App\Auth\Domain\User\ValueObject\PasswordHash;
+
+use App\Auth\Domain\Role\Exception\RoleNotAssignedException;
 use App\Auth\Domain\User\Exception\RoleAlreadyAssignedException;
-use App\Auth\Domain\User\Exception\RoleNotAssignedException;
 
 final class User
 {

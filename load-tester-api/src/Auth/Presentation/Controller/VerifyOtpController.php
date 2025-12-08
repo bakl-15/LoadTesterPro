@@ -1,15 +1,14 @@
 <?php
 // src/Auth/Presentation/VerifyOtpController.php
 
-namespace App\Auth\Presentation;
+namespace App\Auth\Presentation\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use App\Auth\Application\Command\VerifyOtpCommand;
-use App\Auth\Application\Handler\VerifyOtpHandler;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Auth\Application\User\Command\VerifyOtpCommand;
 use App\Auth\Domain\User\Exception\OtpInvalidException;
 use App\Auth\Domain\User\Exception\UserNotFoundException;
+use App\Auth\Application\User\CommandHandlers\VerifyOtpHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class VerifyOtpController extends AbstractController

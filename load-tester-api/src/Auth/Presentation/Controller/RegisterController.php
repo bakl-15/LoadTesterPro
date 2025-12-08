@@ -1,8 +1,10 @@
-
 <?php
+
+namespace App\Auth\Presentation\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Auth\Application\Handler\RegisterUserHandler;
+
+use App\Auth\Application\User\CommandHandlers\RegisterUserHandler;
 use App\Auth\Application\User\Command\RegisterUserCommand;
 use App\Auth\Domain\User\Exception\EmailAlreadyExistsException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
